@@ -13,10 +13,6 @@ namespace RSA_Test
         {
             string path = System.Environment.CurrentDirectory;
             Start(path);
-            //DirectoryInfo direct = new DirectoryInfo(path);
-            //FileInfo[] file_info = direct.GetFiles();
-            //File_Handler handler = new File_Handler();
-            //handler.rename(file_info[0], '$');
 
         }
         static void Start(string path)
@@ -82,13 +78,6 @@ namespace RSA_Test
             int size_limit = 50 * 1024;
             //小文件进行加密时读取的字节大小
             int origin_byte_counts = 1;
-        
-            ////未含公钥私钥
-            //if (public_key == null&&private_key==null)
-            //{
-            //    //设置文件的公钥私钥
-            //    rsaFile.produce_key(out public_key, out private_key);
-            //}
 
             string type=isEncypt?"Encypt":"Decypt";
             //设置是否全部加密
