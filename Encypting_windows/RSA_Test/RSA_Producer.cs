@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ *  SRA加密处理类，产生私钥公钥、加密解密方法
+ *  时间：2016年8月17日19:25:54
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;

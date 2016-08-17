@@ -1,0 +1,10 @@
+C:\Users\DanyFrank\Desktop\Encypting for windows\RSA_Test\bin\Debug\RSA_Test.exe.config
+C:\Users\DanyFrank\Desktop\Encypting for windows\RSA_Test\obj\Debug\RSA_Test.exe
+C:\Users\DanyFrank\Desktop\Encypting for windows\RSA_Test\obj\Debug\RSA_Test.pdb
+C:\Users\DanyFrank\Desktop\Encypting for windows\RSA_Test\bin\Debug\RSA_Test.exe
+C:\Users\DanyFrank\Desktop\Encypting for windows\RSA_Test\bin\Debug\RSA_Test.pdb
+C:\Users\DanyFrank\Desktop\Encypting_windows\RSA_Test\bin\Debug\RSA_Test.exe.config
+C:\Users\DanyFrank\Desktop\Encypting_windows\RSA_Test\obj\Debug\RSA_Test.exe
+C:\Users\DanyFrank\Desktop\Encypting_windows\RSA_Test\obj\Debug\RSA_Test.pdb
+C:\Users\DanyFrank\Desktop\Encypting_windows\RSA_Test\bin\Debug\RSA_Test.exe
+C:\Users\DanyFrank\Desktop\Encypting_windows\RSA_Test\bin\Debug\RSA_Test.pdb

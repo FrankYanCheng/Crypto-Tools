@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ *  文件处理助手类，文件写入、读出、重命名、删除方法
+ *  时间：2016年8月17日19:24:45
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

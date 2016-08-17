@@ -13,8 +13,12 @@ namespace RSA_Test
         {
             string path = System.Environment.CurrentDirectory;
             Start(path);
-
         }
+
+        /// <summary>
+        ///启动流程 
+        /// </summary>
+        /// <param name="path">应用所在路径</param>
         static void Start(string path)
         {
             string public_key_name="public_key.txt";
@@ -43,6 +47,7 @@ namespace RSA_Test
                 if (file.Name == private_key_name)
                     private_key = handler.fileReader(file.FullName);
             }
+            //判断是否存在公钥私钥，无则产生公钥私钥
             if(public_key==null&&private_key==null)
             {
                 Console.WriteLine("Produce key........");
@@ -53,6 +58,7 @@ namespace RSA_Test
             Console.WriteLine("Encypt or Decypt?");
             string order = Console.ReadLine();
             bool isEncypt = true;
+            //加密
             if (order.ToLower() == "encypt" && public_key != null)
             {
                 Console.WriteLine("Do You really want to encypt files?  Y/N");
@@ -60,35 +66,46 @@ namespace RSA_Test
                     isEncypt = true;
                 Cypto(path, public_key, private_key, ref file_info,rsaFile,li_exclude, isEncypt,handler);
             }
+            //解密
             else if (order.ToLower() == "decypt" && private_key != null)
             {
-                Console.WriteLine("Do You really want to decypt files?Y/N");
+                Console.WriteLine("Do You really want to decypt files? Y/N");
                 if (Console.ReadLine().ToLower() == "y")
                     isEncypt = false;
                 Cypto(path, public_key, private_key, ref file_info,rsaFile,li_exclude, isEncypt,handler);
             }
             else
                 Console.WriteLine("You don't have the correct key!");
-
+            Console.WriteLine("The work have been down");
+            Console.ReadKey();
         }
+        /// <summary>
+        /// 加密解密方法
+        /// </summary>
+        /// <param name="path">文件路径</param>
+        /// <param name="public_key">公钥</param>
+        /// <param name="private_key">私钥</param>
+        /// <param name="file_info">文件</param>
+        /// <param name="rsaFile">RSA文件处理类</param>
+        /// <param name="li_exclude">排除的不加密解密文件</param>
+        /// <param name="isEncypt">true:加密,false:解密</param>
+        /// <param name="handler">文件处理类句柄</param>
         static void Cypto(string path, string public_key, string private_key, ref FileInfo[] file_info, RSA_File rsaFile, List<string> li_exclude, bool isEncypt,File_Handler handler)
         {
             int counts = 0;
             //文件全部加密的大小限制
-            int size_limit = 50 * 1024;
+            int size_limit= 50 * 1024;
             //小文件进行加密时读取的字节大小
             int origin_byte_counts = 1;
-
-            string type=isEncypt?"Encypt":"Decypt";
+            string type=isEncypt?"encypting":"decypting";
             //设置是否全部加密
             bool is_total;
             //加密
             foreach (FileInfo file in file_info)
             {
-                Console.WriteLine("{0}:{1} is {2}", counts, file.Name, type);
                 if (!li_exclude.Contains(file.Name))
                 {
-                    Console.WriteLine("File:{0}", file.Name);
+                    Console.WriteLine("{0}:{1} is {2}", counts, file.Name, type);
                     rsaFile.SetPath(file.FullName, origin_byte_counts);
                     if (file.Length < size_limit)
                         is_total = true;
@@ -102,12 +119,11 @@ namespace RSA_Test
                     }
                     else
                     {
-                        Console.WriteLine(private_key);
-                        rsaFile.DecyptNameFile(private_key, is_total, file.Name);
+                        rsaFile.DecyptNameFile(private_key, file.Name);
                       
                     }
-                }
-                ++counts;
+                    ++counts;
+                }    
             }
             DirectoryInfo direct = new DirectoryInfo(path);
             file_info = direct.GetFiles();

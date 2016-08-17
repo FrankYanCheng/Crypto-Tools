@@ -28,7 +28,11 @@ namespace RSA_Test
        string name_symbol = "$";
        //文件名称判别字节大小
        int byte_name_counts = 100;
+       //设置普通数组字节
+       int byte_size = 2;
+       //设置一次解压缩字节读取量
        int decypt_file_counts=128;
+       //最大字节流量
        int max_bytes = 1024 * 1024;
        string file_name;
        string parent_path;
@@ -109,6 +113,7 @@ namespace RSA_Test
       /// <param name="encypt_name">加密后的文件名</param>
       public void EncyptNameFile(string public_key, bool is_total,string encypt_name)
       {
+          string str_total=is_total?"T":"F";
           FileStream fs = File.OpenRead(path);
           FileStream writer = new FileStream(encypt_name, FileMode.Append, FileAccess.Write);
           try
@@ -130,8 +135,10 @@ namespace RSA_Test
                   byte_name[counts+1] = byte_symbol[1];
               }
               writer.Write(byte_name, 0, byte_name_counts);
-
-              byte[] bytes = new byte[origin_byte_counts];
+              //填充是否全部加密
+              byte[] byte_isTotal = (new UnicodeEncoding()).GetBytes(str_total);
+              writer.Write(byte_isTotal, 0, byte_isTotal.Length);
+              byte[] bytes = new byte[origin_byte_counts];   
               //是否全部加密
               if (is_total == false)
               {
@@ -207,17 +214,23 @@ namespace RSA_Test
      /// <param name="private_key">私钥</param>
      /// <param name="is_total">是否完全加密 True:完全加密 False:部分加密</param>
      /// <param name="file_name">需要解密的文件名</param>
-     public void DecyptNameFile(string private_key, bool is_total,string encypt_name)
+     public void DecyptNameFile(string private_key,string encypt_name)
      {
          FileStream fs = File.OpenRead(parent_path+"\\"+encypt_name);
          byte[] byte_name=new byte[byte_name_counts];
          fs.Read(byte_name,0,byte_name.Length);
          string decypt_name=(new UnicodeEncoding()).GetString(byte_name);
+         //解密文件名
          FileStream writer = new FileStream(decypt_name, FileMode.Append, FileAccess.Write);
+         byte[] byte_isTatal=new byte[byte_size];
+         fs.Read(byte_isTatal, 0, byte_isTatal.Length);
+         //判断是否完全加密
+         string str_isTotal = (new UnicodeEncoding()).GetString(byte_isTatal);
          try
          {
              byte[] bytes = new byte[decypt_file_counts];
-             if (is_total == false)
+             //部分加密情况
+             if (str_isTotal=="F")
              {
                  fs.Read(bytes, 0, bytes.Length);
                  byte[] getBytes = rsa_producer.Decypt(private_key, bytes);
